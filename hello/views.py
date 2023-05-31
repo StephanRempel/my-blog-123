@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.utils.timezone import datetime
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from hello.forms import LogMessageForm
@@ -36,6 +37,7 @@ def hello_there(request, name):
     )
 
 
+@csrf_exempt
 def log_message(request):
     form = LogMessageForm(request.POST or None)
     if request.method == "POST":
