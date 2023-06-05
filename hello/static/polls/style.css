@@ -1,0 +1,9 @@
+li a {
+    color: rgb(128, 0, 0);
+    font-size: 20px;
+}
+
+body {
+    /* background: white url("images/sphx_glr_membrane_001.png") no-repeat; */
+    background: white url("images/sphx_glr_membrane_001.png");
+}
