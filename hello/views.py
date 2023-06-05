@@ -41,17 +41,27 @@ class IndexView(generic.ListView):
         return Question.objects.order_by("-pub_date")[:5]
 
 
-def polls_detail(request, question_id):
-    try:
-        question = get_object_or_404(Question, pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, "hello/polls_detail.html", {"question": question})
+# def polls_detail(request, question_id):
+#     try:
+#         question = get_object_or_404(Question, pk=question_id)
+#     except Question.DoesNotExist:
+#         raise Http404("Question does not exist")
+#     return render(request, "hello/polls_detail.html", {"question": question})
 
 
-def polls_results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, "hello/polls_results.html", {"question": question})
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = "hello/polls_detail.html"
+
+
+# def polls_results(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, "hello/polls_results.html", {"question": question})
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = "hello/polls_results.html"
 
 
 def polls_vote(request, question_id):
