@@ -64,6 +64,7 @@ class ResultsView(generic.DetailView):
     template_name = "hello/polls_results.html"
 
 
+@csrf_exempt
 def polls_vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
