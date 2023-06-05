@@ -1,11 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.template import loader
 from django.utils.timezone import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from hello.forms import LogMessageForm
-from hello.models import LogMessage
+from hello.models import LogMessage, Question
 
 
 class HomeListView(ListView):
@@ -20,7 +21,12 @@ class HomeListView(ListView):
 
 def polls_index(request):
     """Renders the polls page."""
-    return render(request, "hello_polls.html")
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    template = loader.get_template("hello/polls_index.html")
+    context = {
+        "latest_question_list": latest_question_list,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def polls_detail(request, question_id):
