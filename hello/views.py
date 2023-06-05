@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.timezone import datetime
 from django.views.decorators.csrf import csrf_exempt
@@ -19,7 +20,20 @@ class HomeListView(ListView):
 
 def polls_index(request):
     """Renders the polls page."""
-    return render(request, "hello/polls.html")
+    return render(request, "hello_polls.html")
+
+
+def polls_detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+
+
+def polls_results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+
+
+def polls_vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
 
 
 def about(request):
