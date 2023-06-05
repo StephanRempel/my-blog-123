@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.utils.timezone import datetime
@@ -31,7 +31,11 @@ def polls_index(request):
 
 
 def polls_detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, "hello/polls_detail.html", {"question": question})
 
 
 def polls_results(request, question_id):

@@ -1,0 +1,17 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+Polls Detail
+{% endblock %}
+{% block content %}
+Polls Detail here
+{% if question %}
+<h1>{{ question.question_text }}</h1>
+<ul>
+    {% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
+{% endblock %}
