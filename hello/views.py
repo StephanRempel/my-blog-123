@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.utils.timezone import datetime
+from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
@@ -20,15 +21,24 @@ class HomeListView(ListView):
         return context
 
 
-def polls_index(request):
-    """Renders the polls page."""
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    template = loader.get_template("hello/polls_index.html")
-    context = {
-        "latest_question_list": latest_question_list,
-    }
-    # return HttpResponse(template.render(context, request))
-    return render(request, "hello/polls_index.html", context)  # shortcut
+# def polls_index(request):
+#     """Renders the polls page."""
+#     latest_question_list = Question.objects.order_by("-pub_date")[:5]
+#     template = loader.get_template("hello/polls_index.html")
+#     context = {
+#         "latest_question_list": latest_question_list,
+#     }
+#     # return HttpResponse(template.render(context, request))
+#     return render(request, "hello/polls_index.html", context)  # shortcut
+
+
+class IndexView(generic.ListView):
+    template_name = "hello/polls_index.html"
+    context_object_name = "latest_question_list"
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by("-pub_date")[:5]
 
 
 def polls_detail(request, question_id):
