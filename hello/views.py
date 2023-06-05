@@ -17,6 +17,11 @@ class HomeListView(ListView):
         return context
 
 
+def polls_index(request):
+    """Renders the polls page."""
+    return render(request, "hello/polls.html")
+
+
 def about(request):
     """Renders the about page."""
     return render(request, "hello/about.html")
